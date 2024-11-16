@@ -1,0 +1,1 @@
+SELECT * FROM products INNER JOIN stockin INNER JOIN stockout on stockin.product_id=products.product_id=stockout.product_id;
