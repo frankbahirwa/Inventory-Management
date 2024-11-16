@@ -1,5 +1,5 @@
 <?php 
-require('./Backend/connection.php');
+require('../Backend/connection.php');
 // session_start();
 ?>
 <!DOCTYPE html>
@@ -163,7 +163,7 @@ cursor: pointer;
 
 
   <div class="profile">
-    <img src="./images/frankk.jpg" alt="Profile">
+    <img src="../images/frankk.jpg" alt="Profile">
     
   
     <span style="color:black;"><?php echo "Hello , ".ucfirst($_SESSION['username']); ?></span>

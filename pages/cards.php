@@ -1,19 +1,3 @@
-<!-- <style>
-  .card {
-    border: 1px solid #ddd;
-    padding: 16px;
-    border-radius: 8px;
-    width: 200px;
-    margin: 10px;
-  }
-</style>
-
-<div class="card">
-  <h3><?php echo htmlspecialchars($title); ?></h3>
-  <p><?php echo htmlspecialchars($description); ?></p>
-  <a href="<?php echo htmlspecialchars($link); ?>"><?php echo htmlspecialchars($view); ?></a>
-</div> -->
-
 
 <style>
     .card {

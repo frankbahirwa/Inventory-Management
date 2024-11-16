@@ -8,7 +8,7 @@ if(!$_SESSION['username']){
 
 ?>
 <?php require "./layout.php" ?>
-<?php require './Backend/connection.php'; ?>
+<?php require '../Backend/connection.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +48,7 @@ if(!$_SESSION['username']){
         width: 82%;
         position: fixed;
         padding-bottom:2cm;
-        top:7cm;
+        top:5cm;
         left: 6.8cm;
         border-radius: 5px;
         box-shadow: 0px 0px 12px lightgray;
@@ -58,6 +58,7 @@ if(!$_SESSION['username']){
     .table {
         width: 100%;
         border-collapse: collapse;
+        text-align: center;
         font-size: 0.875rem;
     }
 
@@ -70,18 +71,13 @@ if(!$_SESSION['username']){
     .table th, .table td {
         padding: 0.75rem;
         border-bottom: 1px solid #e0e0e0;
-        
     }
 
     /* Checkbox cell width */
     .table .checkbox-cell {
-        /* width: 5%; */
+        width: 5%;
     }
 
-    td{
-        text-align:center;
-        
-    }
     /* Actions cell */
     .table .actions-cell {
         text-align: center;
@@ -138,96 +134,25 @@ if(!$_SESSION['username']){
 
 <main>
 
-
-<div class="cards">
-<?php
-$username = $_SESSION['username'];
-$stmt = $conn->prepare("SELECT user_id FROM user WHERE username = ?");
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-
-if (!$user) {
-    echo "<script>alert('User not found.');window.history.back();</script>";
-    exit;
-}
-
-$added_by = $user['user_id'];
-
- 
-$productCountStmt = $conn->prepare("SELECT COUNT(*) FROM products WHERE added_by = ?");
-$productCountStmt->bind_param("i", $added_by);
-$productCountStmt->execute();
-$productCountResult = $productCountStmt->get_result();
-$productCount = $productCountResult->fetch_assoc()['COUNT(*)'];
-
-$stockouts = $conn->prepare("SELECT COUNT(*) FROM stockout WHERE added_by =$added_by");
-$stockouts->execute();
-$stockoutResult = $stockouts->get_result();
-$stockoutcount = $stockoutResult->fetch_assoc()['COUNT(*)'];
-
-$stockinss = $conn->prepare("SELECT COUNT(*) FROM stockin WHERE added_by =$added_by");
-$stockinss->execute();
-$stockinsResult = $stockinss->get_result();
-$stockinscount = $stockinsResult->fetch_assoc()['COUNT(*)'];
-
-$userCountStmt = $conn->prepare("SELECT COUNT(*) FROM user");
-$userCountStmt->execute();
-$userCountResult = $userCountStmt->get_result();
-$userCount = $userCountResult->fetch_assoc()['COUNT(*)'];
-
-$stockCountStmt = $conn->prepare("SELECT COUNT(*) FROM products WHERE quantity > 0 ORDER BY quantity DESC");
-$stockCountStmt->execute();
-$stockCountResult = $stockCountStmt->get_result();
-$stockCount = $stockCountResult->fetch_assoc()['COUNT(*)'];
-
-$userCountStm = $conn->prepare("SELECT COUNT(quantity) FROM products WHERE quantity <= 20 && added_by = $added_by");
-$userCountStm->execute();
-$userCountResults = $userCountStm->get_result();
-$userCounts = $userCountResults->fetch_assoc()['COUNT(quantity)'];
-$plansCount = $userCounts;
-   
-$cards = [
-    ['title' => 'Current - Stock', 'description' => $productCount, 'link' => 'login.html'],
-    ['title' => 'Stock - Outs', 'description' => $stockoutcount, 'link' => 'login.html'],
-    ['title' => 'Stock - Ins', 'description' => $stockinscount, 'link' => 'login.html'],
-    ['title' => 'Low - in - Stock', 'description' => $plansCount, 'link' => 'login.html']
-];
-
-    foreach ($cards as $cardData) {
-        $title = $cardData['title'];
-        $description = $cardData['description'];
-        $link = $cardData['link'];
-        include 'cards.php';
-    }
-    ?>
-
-</div>
-<?php 
-    if($_SESSION['username']){
-  echo $_SESSION['username'];
-    }
-
-?>
 <div class="table-container">
-<table class="table">
-<thead>
-<tr>
+    <table class="table">
+        <thead>
+        <tr>
 <th>Item Serial</th>    
 <th>Item Name</th>
 <th>Item Quantity</th>
 <th>Item Price</th>
 <th>Item Category</th>
 <th>total price</th>
-<th>Status</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
+
 <div class="button">
-    <a href="./addproduct.php"><button style="background:green;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Add - Product</button></a>
-</div>       
+    <a href="./stockin-form.php"><button style="background:green;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Add - Stock</button></a>
+</div>
+         
 <?php
 $username = $_SESSION['username'];
 $stmt = $conn->prepare("SELECT user_id FROM user WHERE username = ?");
@@ -243,14 +168,8 @@ if (!$user) {
 
 $added_by = $user['user_id'];
 
-$userCountStm = $conn->prepare("SELECT COUNT(quantity) AS product_count FROM products WHERE quantity <= 20 && added_by = $added_by");
-$userCountStm->execute();
-$userCountResults = $userCountStm->get_result();
-$userCounts = $userCountResults->fetch_assoc()['product_count'];
-$plansCount = $userCounts;
 
-
-$slct = $conn->query("SELECT * FROM products WHERE added_by = $added_by  ORDER BY quantity DESC");
+$slct = $conn->query("SELECT * FROM stockin WHERE added_by = $added_by  ORDER BY quantity DESC");
 while ($row = $slct->fetch_assoc())
 {?>
 <tr>
@@ -261,23 +180,18 @@ while ($row = $slct->fetch_assoc())
 <td style="text-align:center;"><?php echo $row['category']?></td>
 <td style="text-align:center;"><?php echo $row['price'] * $row['quantity'] ;?></td>
 <td style="text-align:center;">
-<?php
-$status = $plansCount; if($status <= 20){ $stat = "Low in stock";} else{$stat = "Available";} echo $stat;
- ?>
-</td>
-</td>
-<td style="text-align:center;">
 <a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="./images/delete.png" alt=""></a>
 <a style="text-decoration:none;" href="update.php?update=<?php echo $row['product_id']; ?>" style="color:black;"><img src="./images/update.png" alt=""></a>                             
 <?php
 }
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $sql = $conn->query("DELETE FROM products WHERE product_id=$id");
-    if ($sql) {
-        echo "<script>alert(deleted record);window.history.back();</script>"; 
+    $sql = $conn->query("DELETE FROM stockin WHERE product_id=$id");
+    if (!$sql) {
+        echo "<script>alert(Error deleting record)</script>"; 
     }   
 }
+
 ?>
 
 </td>

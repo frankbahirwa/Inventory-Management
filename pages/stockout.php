@@ -8,7 +8,7 @@ if(!$_SESSION['username']){
 
 ?>
 <?php require "./layout.php" ?>
-<?php require './Backend/connection.php'; ?>
+<?php require '../Backend/connection.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,16 +141,13 @@ if(!$_SESSION['username']){
 <th>Item Serial</th>    
 <th>Item Name</th>
 <th>Item Quantity</th>
-<th>Item Price</th>
-<th>Item Category</th>
-<th>total price</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
 
 <div class="button">
-    <a href="./stockin-form.php"><button style="background:green;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Add - Stock</button></a>
+    <a href="./stockout-form.php"><button style="background:green;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Remove - Stock</button></a>
 </div>
          
 <?php
@@ -169,24 +166,21 @@ if (!$user) {
 $added_by = $user['user_id'];
 
 
-$slct = $conn->query("SELECT * FROM stockin WHERE added_by = $added_by  ORDER BY quantity DESC");
+$slct = $conn->query("SELECT * FROM stockout WHERE added_by = $added_by  ORDER BY quantity DESC");
 while ($row = $slct->fetch_assoc())
 {?>
 <tr>
-<td style="text-align:center;"><?php echo $row['product_id']?></td>
+<td style="text-align:center;"><?php echo $row['id']?></td>
 <td><?php echo $row['product_name']?></td>
 <td style="text-align:center;"><?php echo $row['quantity']?></td>
-<td style="text-align:center;"><?php echo $row['price']?> Rwf/Kg</td>
-<td style="text-align:center;"><?php echo $row['category']?></td>
-<td style="text-align:center;"><?php echo $row['price'] * $row['quantity'] ;?></td>
 <td style="text-align:center;">
-<a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="./images/delete.png" alt=""></a>
-<a style="text-decoration:none;" href="update.php?update=<?php echo $row['product_id']; ?>" style="color:black;"><img src="./images/update.png" alt=""></a>                             
+<a style="text-decoration:none;" href="?delete=<?php echo $row['id']; ?>" style="color:black;"><img style="width:20px;" src="./images/delete.png" alt=""></a>
+<a style="text-decoration:none;" href="update.php?update=<?php echo $row['id']; ?>" style="color:black;"><img src="./images/update.png" alt=""></a>                             
 <?php
 }
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $sql = $conn->query("DELETE FROM stockin WHERE product_id=$id");
+    $sql = $conn->query("DELETE FROM stockout WHERE product_id=$id");
     if (!$sql) {
         echo "<script>alert(Error deleting record)</script>"; 
     }   

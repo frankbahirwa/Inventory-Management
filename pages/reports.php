@@ -1,10 +1,10 @@
 <?php 
-require './Backend/connection.php';
+require '../Backend/connection.php';
 session_start();
 require('./layout.php');
 
 if(!$_SESSION['username']){
-    header("location:./login.php");
+    header("location:../index.php");
     exit();
 }
 ?>
@@ -98,9 +98,9 @@ if(!$_SESSION['username']){
 <body>
 <div class="container">
     <div class="header" style="padding:0.5cm;">
-        <img src="./images/logos.jpg" style="position:absolute;left:0;" alt="Amity Logo">
+        <img src="../images/real.png" style="position:absolute;left:1cm;top:8px;border-radius:10px;" alt="Amity Logo">
         <div class="header-content">
-            <p class="university-name">Xy-Shop Centralized Reports</p>
+            <p class="university-name">Inventory Centralized Reports</p>
             <button id="exportBtn" style="cursor:pointer;background:green; padding:10px; border-radius:5px;position:absolute;right:3rem;top:0.5cm;color:white;border:0;">Export</button>
         </div>
     </div>

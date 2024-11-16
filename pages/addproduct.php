@@ -7,7 +7,7 @@ exit();
 }
 ?>
 <?php 
-require './Backend/connection.php';
+require '../Backend/connection.php';
 
 ?>
 
@@ -42,10 +42,11 @@ body {
     border-radius: 8px;
     display: flex;
     flex-direction: column;
+    justify-content:space-between;
     width: 90%;
     max-width: 800px;
-    margin-top:3cm;
     margin: auto;
+    margin-top:5cm;
     overflow: hidden;
     padding-right:2cm;
 }
@@ -135,7 +136,7 @@ button:hover {
 <main style="margin-top:3.5cm;">
 <div class="container">
 <div class="left-panel">
-<img src="./images/logos.jpg" alt="Work Desk" class="max-w-full h-auto"/>
+<img src="../images/rea.png" height="350px" alt="" class="max-w-full h-auto"/>
 </div>
 <div class="right-panel">
 <form action="#" id="login-form" method="post">

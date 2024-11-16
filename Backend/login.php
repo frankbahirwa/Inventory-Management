@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
 $row = $result->fetch_assoc();
 
 if (password_verify($pass,$row['password_hash'])) {
-header("Location:../dashboard.php");
+header("Location:../pages/dashboard.php");
 $_SESSION['loggedin'] = true;
 
 $_SESSION['username'] = $user;

@@ -114,11 +114,11 @@ button:hover {
     <main style="margin-top:2cm;">
         <div class="container">
             <div class="left-panel">
-                <img src="./images/logos.jpg" alt="Work Desk" class="max-w-full h-auto"/>
+                <img src="../images/logos.jpg" alt="Work Desk" class="max-w-full h-auto"/>
             </div>
             <div class="right-panel">
                 <h2>Sign up form</h2>
-                <form id="login-form" method="post" action="./Backend/account.php">
+                <form id="login-form" method="post" action="../Backend/account.php">
                     <div>
                         <input type="text" id="username" name="username" placeholder="F-Name*" required />
                     </div>
@@ -129,7 +129,7 @@ button:hover {
                     </div>
                        
                     <button type="submit">Create account</button> <br><br>
-                    Already Have Acount  <a href="./login.php" style="text-decoration:none;">Login</a>
+                    Already Have Acount  <a href="../index.php" style="text-decoration:none;">Login</a>
                 </form>
                 <p id="error-message" style="color: red;"></p>
                 <!-- <div class="socials">

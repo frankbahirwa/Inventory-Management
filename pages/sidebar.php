@@ -21,7 +21,7 @@
     transition: transform 0.3s ease;
   }
   
-  .sidebar img {
+  .sidebar #logos {
     width: 3cm;
     height: 3cm;
     margin-top: 0.5cm;
@@ -63,6 +63,10 @@
     z-index: 1000;
   }
 
+  #logs-home{
+    height:20px;
+  }
+
   @media (max-width: 768px) {
     .sidebar {
       transform: translateX(-100%);
@@ -82,18 +86,18 @@
 
 <div class="sidebar" id="sidebar">
   <div class="logos">
-    <img src="./images/logos.jpg" alt="logos">
+    <img src="../images/reall.png" id="logos" alt="logos">
   </div>   
   <div class="links">
-    <a href="dashboard.php">Home</a>
-    <a href="stockin.php">stockin</a>
-    <a href="stockout.php">stockout</a>
-    <a href="reports.php">reports</a>
+    <a href="dashboard.php"><img src="../images/home.png" id="logs-home" alt="">  Home</a>
+    <a href="stockin.php"><img src="../images/in.png" id="logs-home" alt=""> Stockin</a>
+    <a href="stockout.php"><img src="../images/out.png" id="logs-home" alt=""> Stockout</a>
+    <a href="reports.php"> <img src="../images/reports.png" id="logs-home" alt="">Reports</a>
   </div>   
   <div class="logout">
-    <a href="./Backend/logout.php" style="color:orange;text-decoration:none;">Logout</a>
+    <a href="../Backend/logout.php" style="color:orange;text-decoration:none;">Logout</a>
   </div>          
 </div>
-<script src="./js/sidebar.js"></script>
+<script src="../js/sidebar.js"></script>
 </body>
 </html>

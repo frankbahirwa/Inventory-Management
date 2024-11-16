@@ -129,7 +129,7 @@ button:hover {
                         <input type="password" id="confirm-password" placeholder="Confirm Password*" required />
                     </div> -->
                     <button type="submit">Login</button> <br> <br>
-                    Dont Have Account  <a href="./signup.php" style="text-decoration:none;">Signup</a>
+                    Dont Have Account  <a href="./pages/signup.php" style="text-decoration:none;">Signup</a>
                 </form>
                 <p id="error-message" style="color: red;"></p>
                 <!-- <div class="socials">
