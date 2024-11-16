@@ -1,14 +1,11 @@
+# Exported from Render on 2024-11-16T16:23:17Z
 services:
-  - type: web
-    name: php-app
-    env: php
-    plan: free
-    region: oregon
-    buildCommand: |
-      apt-get update
-      apt-get install -y php
-      curl -sS https://getcomposer.org/installer | php
-      php composer.phar install
-    startCommand: |
-      php -v
-      php -S 0.0.0.0:10000
+- type: web
+  name: Inventory-Management
+  runtime: node
+  repo: https://github.com/frankbahirwa/Inventory-Management
+  plan: free
+  region: oregon
+  buildCommand: composer install
+  startCommand: php -S 0.0.0.0:10000
+version: "1"
