@@ -180,7 +180,7 @@ while ($row = $slct->fetch_assoc())
 <td style="text-align:center;"><?php echo $row['category']?></td>
 <td style="text-align:center;"><?php echo $row['price'] * $row['quantity'] ;?></td>
 <td style="text-align:center;">
-<a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="./images/delete.png" alt=""></a>
+<a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="../images/delete.png" alt=""></a>
 <a style="text-decoration:none;" href="update.php?update=<?php echo $row['product_id']; ?>" style="color:black;"><img src="./images/update.png" alt=""></a>                             
 <?php
 }

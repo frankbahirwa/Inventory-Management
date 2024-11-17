@@ -70,7 +70,7 @@ if ($action === 'stockOut') {
                 $updateStmt = $conn->prepare("UPDATE products SET quantity = ? WHERE product_name = ?");
                 $updateStmt->bind_param("is", $new_quantity, $name);
                 if ($updateStmt->execute()) {
-                    echo "<script>alert('Stock updated successfully.'); window.location.href = '../dashboard.php';</script>";
+                    echo "<script>alert('Stock updated successfully.'); window.location.href = '../pages/dashboard.php';</script>";
                 } else {
                     echo "<script>alert('Failed to update stock.'); window.history.back();</script>";
                 }

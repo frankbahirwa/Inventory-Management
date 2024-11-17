@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Management - Inventory</title>
+<link rel="icon" type="image/png" href="../images/reall.png" style="border-radius:10px;">
 </head>
 <body>
 <?php

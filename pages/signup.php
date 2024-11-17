@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
-    <link rel="stylesheet" href="styles.css"> 
+    <title>Inventory | Regist</title>
+    <link rel="icon" type="image/png" href="../images/reall.png" style="border-radius:10px;">
    <style>
 body {
     font-family: Arial, sans-serif;
@@ -22,7 +22,9 @@ body {
     flex-direction: column;
     width: 90%;
     max-width: 800px;
-    margin-top:-2cm;
+    position:absolute;
+    top:6cm;
+    left:9cm;
     padding-right:2cm;
     margin: auto;
     overflow: hidden;

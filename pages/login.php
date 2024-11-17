@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
+    <title>Inventory | Login</title>
+    <link rel="icon" type="image/png" href="../images/reall.png" style="border-radius:10px;">
     <link rel="stylesheet" href="styles.css"> 
    <style>
 body {
@@ -22,7 +23,9 @@ body {
     flex-direction: column;
     width: 90%;
     max-width: 800px;
-    margin-top:3cm;
+    position:absolute;
+    top:6cm;
+    left:9cm;
     margin: auto;
     overflow: hidden;
     padding-right:2cm;
