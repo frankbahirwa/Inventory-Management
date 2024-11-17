@@ -1,4 +1,4 @@
-# Exported from Render on 2024-11-16T16:23:17Z
+
 services:
 - type: web
   name: Inventory-Management

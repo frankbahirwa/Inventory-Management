@@ -41,7 +41,7 @@ if(!$_SESSION['username']){
     .table-container {
         overflow-x: auto; /* Enable horizontal scroll if needed */
         overflow-y: auto; /* Enable vertical scroll */
-        height: 60%; /* Set a fixed height for the table container */
+        height:fit-content; /* Set a fixed height for the table container */
         margin: 1rem 0;
         margin-bottom:3cm;
         padding-top:1cm;
@@ -58,7 +58,6 @@ if(!$_SESSION['username']){
     .table {
         width: 100%;
         border-collapse: collapse;
-        text-align: center;
         font-size: 0.875rem;
     }
 
@@ -71,13 +70,18 @@ if(!$_SESSION['username']){
     .table th, .table td {
         padding: 0.75rem;
         border-bottom: 1px solid #e0e0e0;
+        
     }
 
     /* Checkbox cell width */
     .table .checkbox-cell {
-        width: 5%;
+        /* width: 5%; */
     }
 
+    td{
+        text-align:center;
+        
+    }
     /* Actions cell */
     .table .actions-cell {
         text-align: center;
@@ -102,9 +106,20 @@ if(!$_SESSION['username']){
     main {
         position: relative;
         height: 100vh;
-        overflow-y: auto; 
+        overflow-y: auto;
+        width:fit-content; 
     }
 
+    .right-panel{
+        display:none;
+    }
+    .show{
+        display:block;
+        position:absolute;
+        top:7cm;
+        background-color:red;
+        padding:1cm;
+    }
     @media (max-width: 768px) {
         .table thead {
             display: none;
@@ -133,28 +148,25 @@ if(!$_SESSION['username']){
 <body>
 
 <main>
-
 <div class="table-container">
-    <table class="table">
-        <thead>
-        <tr>
+<table class="table">
+<thead>
+<tr>
 <th>Item Serial</th>    
 <th>Item Name</th>
 <th>Item Quantity</th>
 <th>Item Price</th>
 <th>Item Category</th>
 <th>total price</th>
+<th>Status</th>
 <th>Action</th>
 </tr>
 </thead>
-<tbody>
-
-<div class="button">
-    <a href="./stockin-form.php"><button style="background:black;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Add - Stock</button></a>
-</div>
-         
+<tbody>      
 <?php
+if (isset($_SESSION['search_query'])) {
 $username = $_SESSION['username'];
+
 $stmt = $conn->prepare("SELECT user_id FROM user WHERE username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -162,17 +174,28 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 if (!$user) {
-    echo "<script>alert('User not found.');window.history.back();</script>";
-    exit;
+                  echo "<script>alert('User not found.');window.history.back();</script>";
+                  exit;
 }
 
 $added_by = $user['user_id'];
+$searchTerm = $_SESSION['search_query'];
 
+$stmt = $conn->prepare("SELECT * FROM products WHERE product_name LIKE ? AND added_by = ?");
+$searchTermWildcard = "%$searchTerm%";
+$stmt->bind_param("si", $searchTermWildcard, $added_by); 
+$stmt->execute();
+$results = $stmt->get_result();
 
-$slct = $conn->query("SELECT * FROM stockin WHERE added_by = $added_by  ORDER BY quantity DESC");
-while ($row = $slct->fetch_assoc())
-{?>
-<tr>
+$userCountStm = $conn->prepare("SELECT COUNT(quantity) AS product_count FROM products WHERE quantity <= 20 && added_by = $added_by");
+$userCountStm->execute();
+$userCountResults = $userCountStm->get_result();
+$userCounts = $userCountResults->fetch_assoc()['product_count'];
+$plansCount = $userCounts;
+
+if ($results->num_rows > 0) {
+while ($row = $results->fetch_assoc()) { ?>
+                 <tr>
 <td style="text-align:center;"><?php echo $row['product_id']?></td>
 <td><?php echo $row['product_name']?></td>
 <td style="text-align:center;"><?php echo $row['quantity']?></td>
@@ -180,27 +203,45 @@ while ($row = $slct->fetch_assoc())
 <td style="text-align:center;"><?php echo $row['category']?></td>
 <td style="text-align:center;"><?php echo $row['price'] * $row['quantity'] ;?></td>
 <td style="text-align:center;">
-<a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="./images/delete.png" alt=""></a>
-<a style="text-decoration:none;" href="update.php?update=<?php echo $row['product_id']; ?>" style="color:black;"><img src="./images/update.png" alt=""></a>                             
+<?php
+$status = $plansCount; if($status <= 20){ $stat = "Low in stock";} else{$stat = "Available";} echo $stat;
+ ?>
+</td>
+</td>
+<td style="text-align:center;">
+<a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="../images/delete.png" alt=""></a>
+<a style="text-decoration:none;" href="update.php?update=<?php echo $row['product_id']; ?>" style="color:black;"><img src="../images/update.png" alt=""></a>                             
 <?php
 }
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $sql = $conn->query("DELETE FROM stockin WHERE product_id=$id");
-    if (!$sql) {
-        echo "<script>alert(Error deleting record)</script>"; 
+    $sql = $conn->query("DELETE FROM products WHERE product_id=$id");
+    if ($sql) {
+        echo "<script>alert(deleted record);window.history.back();</script>"; 
     }   
 }
 
+
+unset($_SESSION['search_query']);
+}
+
+else {
+$error ="No results found for :  " . htmlspecialchars($searchTerm);
+}
 ?>
 
 </td>
 </tr>
         </tbody>
     </table>
+    <div class="error">
+    <p style="color:red;font-size:20px;position:absolute;bottom:1cm;left:4cm;"><?php if(!empty($error)){echo $error;} ?></p>
+    </div>
 </div>
+<?php }
+?>
+</main>  
 
-</main>                  
 
 </body>
 </html>

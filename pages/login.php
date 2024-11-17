@@ -22,10 +22,10 @@ body {
     flex-direction: column;
     width: 90%;
     max-width: 800px;
-    margin-top:-2cm;
-    padding-right:2cm;
+    margin-top:3cm;
     margin: auto;
     overflow: hidden;
+    padding-right:2cm;
 }
 
 .left-panel {
@@ -42,7 +42,7 @@ body {
     margin-bottom: 20px;
 }
 
-input[type="text"],input[type="number"],
+input[type="text"],
 input[type="password"] {
     width: 94%;
     padding: 10px;
@@ -111,35 +111,25 @@ button:hover {
 </head>
 <body>
 
-    <main style="margin-top:2cm;">
+    <main style="margin-top:3.5cm;">
         <div class="container">
             <div class="left-panel">
                 <img src="../images/reall.png" style="border-radius:10px;" alt="Work Desk" class="max-w-full h-auto"/>
             </div>
             <div class="right-panel">
-                <h2>Sign up form</h2>
-                <form id="login-form" method="post" action="../Backend/account.php">
+                <h2>Login</h2>
+                <form action="../Backend/login.php" id="login-form" method="post">
                     <div>
-                        <input type="text" id="username" name="username" placeholder="F-Name*" required />
+                        <input type="text" id="username" name="username" placeholder="username*" required />
+                    </div>
+                    <div>
+                        <input type="password" id="password" name="password" placeholder="Password*" required />
                     </div>
 
-
-                    <div>
-                        <input type="password" id="password" name='password' placeholder="Password*" required />
-                    </div>
-                       
-                    <button type="submit">Create account</button> <br><br>
-                    Already Have Acount  <a href="./login.php" style="text-decoration:none;">Login</a>
+                    <button type="submit">Login</button> <br> <br>
+                    Dont Have Account  <a href="./signup.php" style="text-decoration:none;">Signup</a>
                 </form>
                 <p id="error-message" style="color: red;"></p>
-                <!-- <div class="socials">
-                    <p>Or continue with</p>
-                    <div class="social-icons">
-                        <a href="https://www.google.com/accounts/signup"><img src="./images/Google.png" alt="Google"></a>
-                        <a href="https://www.facebook.com/register"><img src="./images/Facebook.png" alt="Facebook"></a>
-                        <a href="https://www.instagram.com/accounts/emailsignup/"><img src="./images/Instagram.png" alt="Instagram"></a>
-                    </div>
-                </div> -->
             </div>
         </div>
     </main>

@@ -113,16 +113,16 @@ if ($action === 'stockIn') {
         }
         $stmt->execute();
     } else {
-        $stmt = $conn->prepare("INSERT INTO products (product_name, description, price, product_id, quantity, supplier, category, product_image_path, added_by, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
-        $stmt->bind_param("ssdiisssi", $name, $description, $price, $product_id, $quantity, $supplier, $category, $product_image_path, $added_by);
-        $stmt->execute();
+        $stockInStmt = $conn->prepare("INSERT INTO products (product_name, description, price, product_id, quantity, supplier, category, product_image_path, added_by, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stockInStmt->bind_param("ssdiiissi", $name, $description, $price, $product_id, $quantity, $supplier, $category, $product_image_path, $added_by);
+        $stockInStmt->execute();
     }
 
     $stockInStmt = $conn->prepare("INSERT INTO stockin (product_name, description, price, product_id, quantity, supplier, category, product_image_path, added_by, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
     $stockInStmt->bind_param("ssdiiissi", $name, $description, $price, $product_id, $quantity, $supplier, $category, $product_image_path, $added_by);
     $stockInStmt->execute();
 
-    echo "<script>alert('Stock-in recorded successfully.'); window.location.href = '../dashboard.php';</script>";
+    echo "<script>alert('Stock-in recorded successfully.'); window.location.href = '../pages/dashboard.php';</script>";
     exit;
 }
 

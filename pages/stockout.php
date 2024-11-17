@@ -147,7 +147,7 @@ if(!$_SESSION['username']){
 <tbody>
 
 <div class="button">
-    <a href="./stockout-form.php"><button style="background:green;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Remove - Stock</button></a>
+    <a href="./stockout-form.php"><button style="background:black;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Remove - Stock</button></a>
 </div>
          
 <?php

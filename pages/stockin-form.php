@@ -2,12 +2,12 @@
 session_start();
 
 if(!$_SESSION['username']){
-    header("location: login.php");
+    header("location: ../index.php");
     exit();
 }
 
 ?>
-<?php require "./backend/connection.php" ?>
+<?php require "../backend/connection.php" ?>
 <?php require './layout.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -275,7 +275,7 @@ Manage - Stock</button></p>
 <div class="stockin">
 <p style="background:linear-gradient(teal,white);width:25cm;position:absolute;left:4.5cm;color:white;padding:10px;border-radius:10px;font-size:20px;">Add the new product to the stock</p>
 <div class="forms">
-<form action="./backend/stock-in.php" method="post">
+<form action="../backend/stock-in.php" method="post">
 <div class="first">
 <input type="hidden" name="date" id="" placeholder="Expiry Date">
 <input type="text" name="supplier" id="" placeholder="Supplied BY">
@@ -301,8 +301,8 @@ outline: 0;
 <input type="text" name="quantity" id="quantity" placeholder="Product Quantity">
 <input type="text" name="price" id="price" placeholder="Product Price / each">
 </div>
-<textarea type="text" name="description" id="description" style="position:absolute;bottom:3.5cm;height:1cm;border-radius:10px; width:17.3cm;right:7.5cm;" placeholder="Product Description"></textarea>
-<button type="text" name="add-product" id="" style="font-size:20px;position:absolute;bottom:2cm;height:1cm;border-radius:10px; width:17.2cm;right:7.5cm;background:orangered;color:white;border:0;">Save product</button>
+<textarea type="text" name="description" id="description" style="position:absolute;bottom:3.5cm;height:1cm;border-radius:10px; width:17.6cm;right:7.5cm;" placeholder="Product Description"></textarea>
+<button type="text" name="add-product" id="" style="font-size:20px;position:absolute;bottom:2cm;height:1cm;border-radius:10px; width:17.6cm;right:7.5cm;background:black;color:white;border:0;">Save product</button>
 </form>
 </div>
 <p class="remove" onclick="remove();">X</p>

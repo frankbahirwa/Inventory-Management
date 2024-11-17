@@ -9,3 +9,10 @@ try {
     echo "Error initializing database: " . $e->getMessage();
 }
 ?>
+
+
+
+
+
+
+<?php

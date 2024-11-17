@@ -10,6 +10,8 @@
 require "header.php";
 require "sidebar.php";
 // require "footer.php";
+
 ?>
+<p style="position:absolute;bottom:0;width:20cm;right:0cm;">xy_shop &copy; 2024 all right reserved</p>
 </body>
 </html>

@@ -1,13 +1,12 @@
 <?php 
 require('../Backend/connection.php');
-// session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive Page</title>
+<title></title>
 <style>
   * {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;  
@@ -93,7 +92,7 @@ require('../Backend/connection.php');
     width: 1cm;
     height: 1cm;
     border-radius:50%;
-    background-color: green;
+    background-color: black;
     color:white;
     text-align: center;
 
@@ -120,6 +119,11 @@ border-radius:10px;
 cursor: pointer;
                 
   }
+
+.dropdown a{
+  text-decoration: none;
+}
+
   input::placeholder{
     color: orange;
   }
@@ -153,25 +157,70 @@ cursor: pointer;
 <header>
   <div class="logo">
     <div class="plus">
-     <a href="./stockin-form.php" style="color:white;text-decoration:none;">+</a>
+     <a href="./stockin-form.php" style="color:white;text-decoration:none; margin-top:5px;">+</a>
     </div>
-    <button style="width:2cm;">search</button>
+
+    <form action="#" method="post">
+    <button style="width:2cm;background:black;position:absolute;margin-top:-20px;" name="search">search</button>
     <!-- <span class="search-icon">&#128269;</span> -->
-    <input style="width:7cm;margin-top:5px;" type="text" name="" class="search" id="#search" placeholder="Search...">
-    
+    <input style="width:12.4cm;margin-top:-20px;" type="text" name="input-search" class="search" id="#search" placeholder="Search Products...">
+    </form> 
+    <?php
+// Search functionality
+if (isset($_POST['search'])) {
+    if (empty($_POST['input-search'])) {
+        echo "<script>alert('Please fill in the search field before submitting.');</script>";
+    } else {
+        $look = $_POST['input-search'];
+        $_SESSION['search_query'] = $look; 
+        header("Location: ./search.php");
+        exit();
+    }
+}
+?>
+
+
+</script>
+
+
   </div>
 
 
   <div class="profile">
-    <img src="../images/frankk.jpg" alt="Profile">
-    
-  
+  <?php 
+
+$username = $_SESSION['username'];
+$stmt = $conn->prepare("SELECT user_id FROM user WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user) {
+    echo "<script>alert('User not found.');window.history.back();</script>";
+    exit;
+}
+
+$added_by = $user['user_id'];
+
+$select = $conn->query("SELECT * FROM profiles WHERE added_by = $added_by ORDER BY profile_id DESC LIMIT 1");
+
+if ($select->num_rows > 0) {
+    while ($row = $select->fetch_assoc()) { ?>
+  <img src="../<?php echo $row['image']; ?>" alt="Profile">
+    <?php }
+} else { ?>
+    <img style="" src="../images/defaults.png" alt="defaul pic">
+<?php }
+?>
+
+
     <span style="color:black;"><?php echo "Hello , ".ucfirst($_SESSION['username']); ?></span>
     <div class="dropdown">
-      <a href="#">Add Profile</a><br><br>
+      <a href="./profile.php">Add Profile</a><br><br>
       <a href="#">Security & Privacy</a><br><br>
       <a href="#">Dark Mode</a><br><br>
-      <a href="./Backend/logout.php">Logout</a>
+      <a href="../Backend/logout.php">Logout</a>
     </div>
   </div>
 </header>

@@ -106,7 +106,8 @@ if(!$_SESSION['username']){
     main {
         position: relative;
         height: 100vh;
-        overflow-y: auto; 
+        overflow-y: auto;
+        width:fit-content; 
     }
 
     .right-panel{
@@ -304,7 +305,7 @@ $cards = [
 </thead>
 <tbody>
 <div class="button">
-    <a href="#"><button class="button" style="background:green;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Add - Product</button></a>
+    <a href="./addproduct.php"><button class="button" style="background:black;position:absolute; padding:.3cm;color:white;border:0;left:0;top:0;">Add - Product</button></a>
 </div>       
 <?php
 $username = $_SESSION['username'];
@@ -345,8 +346,8 @@ $status = $plansCount; if($status <= 20){ $stat = "Low in stock";} else{$stat = 
 </td>
 </td>
 <td style="text-align:center;">
-<a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="./images/delete.png" alt=""></a>
-<a style="text-decoration:none;" href="update.php?update=<?php echo $row['product_id']; ?>" style="color:black;"><img src="./images/update.png" alt=""></a>                             
+<a style="text-decoration:none;" href="?delete=<?php echo $row['product_id']; ?>" style="color:black;"><img style="width:20px;" src="../images/delete.png" alt=""></a>
+<a style="text-decoration:none;" href="update.php?update=<?php echo $row['product_id']; ?>" style="color:black;"><img src="../images/update.png" alt=""></a>                             
 <?php
 }
 if(isset($_GET['delete'])){
@@ -365,7 +366,6 @@ if(isset($_GET['delete'])){
 </div>
 
 </main>  
-
 <script>
     const Right = document.querySelector('.right-panel');
     const button = document.querySelector('.button');

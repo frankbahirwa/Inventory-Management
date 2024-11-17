@@ -2,13 +2,13 @@
 session_start();
 
 if(!$_SESSION['username']){
-    header("location: login.php");
+    header("location: ../index.php");
     exit();
 }
 
 ?>
 
-<?php require "./backend/connection.php" ?>
+<?php require "../backend/connection.php" ?>
 <?php require './layout.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -242,13 +242,13 @@ transform: scale(1);
 <div class="container">
 <div class="stockout">
 <div class="formed">
-<form action="./Backend/stock-out.php"method="post">
-<p style="color:teal;margin-bottom:3cm;">Stock - Out Items</p> 
-<input type="text"  name = "name" id="item-name" placeholder="Item Name" style="width:10cm; height:0.5cm;"> <br><br>
-<input type="number" name = "quantity" id="item-name" placeholder="Item Quantity" style="width:10cm;height:0.5cm;"><br><br>
+<form action="../Backend/stock-out.php"method="post">
+<p style="color:teal;margin-bottom:2cm;font-size:30px;">Stock - Out Items</p> 
+<input type="text"  name = "name" id="item-name" placeholder="Item Name" style="width:10cm; height:1cm;border-radius:9px;"> <br><br>
+<input type="number" name = "quantity" id="item-name" placeholder="Item Quantity" style="width:10cm;height:1cm;border-radius:9px;"><br><br>
 <textarea  name="reason" id="description" placeholder="Reason for Stock-Out" style="width:10cm;"></textarea>
 <div class="buttons">
-<button id="stock-out" name="stock-out" style="width:10cm;position:absolute; left:5.1cm;border-radius:10px;">Stock Out</button>
+<button id="stock-out" name="stock-out" style="width:10cm;position:absolute;background:black; left:5.1cm;border-radius:10px;">Stock Out</button>
 </form>
 </div>
 </div>

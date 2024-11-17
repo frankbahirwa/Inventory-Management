@@ -7,7 +7,7 @@ if(!$_SESSION['username']){
 }
 
 ?>
-<?php require "./backend/connection.php" ?>
+<?php require "../backend/connection.php" ?>
 <?php require './layout.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -230,7 +230,12 @@ transform: scale(1);
 </style>
 </head>
 <body>
-<div class="stock">
+<?php
+if(isset($_GET['update'])){
+  $id = $_GET['update'];  
+  $selct = $conn->query("SELECT * FROM products WHERE product_id = '$id'");
+  while($row = $selct->fetch_assoc()) {?>
+      <div class="stock">
 <div class="mantain">
 
 <div class="container">
@@ -248,10 +253,10 @@ transform: scale(1);
 <div class="stockin">
 <p style="background:linear-gradient(teal,white);width:25cm;position:absolute;left:4.5cm;color:white;padding:10px;border-radius:10px;font-size:20px;">Update the product</p>
 <div class="forms">
-<form action="./backend/stock-in.php" method="post">
+<form action="#" method="post">
 <div class="first">
 <input type="hidden" name="date" id="" placeholder="Expiry Date">
-<input type="text" name="supplier" id="" placeholder="Supplied BY">
+<input type="text" name="supplier" id="" placeholder="Supplied BY" value="<?php echo $row['supplier']?>">
 <select name="category" id="category" style="
 width:8cm;
 border: 1px solid gray;
@@ -266,17 +271,60 @@ outline: 0;
 <option value="shoes">shoes</option>
 <option value="food">food & related</option>
 <option value="other">other</option>
-</select>   
+</select>     
 <input type="file" name="file" id="file">     
 </div>
 <div class="second">
-<input type="text" name="name" id="name" placeholder="Product Name">
-<input type="text" name="quantity" id="quantity" placeholder="Product Quantity">
-<input type="text" name="price" id="price" placeholder="Product Price / each">
+<input type="text" name="name" id="name" placeholder="Product Name" value="<?php echo $row['product_name']?>">
+<input type="text" name="quantity" id="quantity" placeholder="Product Quantity" value="<?php echo $row['quantity']?>">
+<input type="text" name="price" id="price" placeholder="Product Price / each" value="<?php echo $row['price']?>">
 </div>
-<textarea type="text" name="description" id="description" style="position:absolute;bottom:3.5cm;height:1cm;border-radius:10px; width:17.3cm;right:7.5cm;" placeholder="Product Description"></textarea>
-<button type="text" name="add-product" id="" style="font-size:20px;position:absolute;bottom:2cm;height:1cm;border-radius:10px; width:17.2cm;right:7.5cm;background:orangered;color:white;border:0;">Update</button>
+<textarea type="text" name="description" id="description" style="position:absolute;bottom:3.5cm;height:1cm;border-radius:10px; width:17.3cm;right:7.5cm;" placeholder="Product Description" value="<?php echo $row['description']?>"></textarea>
+<button type="text" name="add-product" id="" style="font-size:20px;position:absolute;bottom:2cm;height:1cm;border-radius:10px; width:17.5cm;right:7.5cm;background:black;color:white;border:0;">Update</button>
 </form>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   
+    $product_id = $_GET['update']; 
+    $supplier = mysqli_real_escape_string($conn, $_POST['supplier']);
+    $category = mysqli_real_escape_string($conn, $_POST['category']);
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
+    $price = mysqli_real_escape_string($conn, $_POST['price']);
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
+
+  
+    if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
+        $file_tmp = $_FILES['file']['tmp_name'];
+        $file_name = $_FILES['file']['name'];
+        $file_path = "../assets/products" . $file_name;
+        move_uploaded_file($file_tmp, $file_path);
+    } else {
+        $file_path = null;
+    }
+
+  
+    $query = "UPDATE products SET 
+              supplier = '$supplier', 
+              category = '$category', 
+              product_name = '$name', 
+              quantity = '$quantity', 
+              price = '$price', 
+              description = '$description', 
+              product_image_path = '$file_path'
+              WHERE product_id = '$product_id'";
+
+    if (mysqli_query($conn, $query)) {
+    
+        echo "<script>alert('product updated successifully');window.location.href='./dashboard.php';</script>";
+        exit();
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+?>
+
 </div>
 <p class="remove" onclick="remove();">X</p>
 </div>
@@ -284,6 +332,11 @@ outline: 0;
 <div class="inventory">
 </div>
 </div>
+ 
+<?php }
+}
+?>
+
 <script src="../js/items-handler.js">
 </script>
 </body>
