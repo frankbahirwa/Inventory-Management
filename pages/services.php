@@ -177,11 +177,11 @@ a {
 </head>
 <body>
     <header class="navbar">
-    <img src="./images/reall.png" height="100px"width="100px" alt="Stock Management Illustration">
+    <img src="../images/reall.png" height="100px"width="100px" alt="Stock Management Illustration">
         <nav class="nav-links">
-            <!-- <a href="./pages/services.php">Services</a>
+            <a href="#features">Features</a>
             <a href="#about">About</a>
-            <a href="#contact">Contact</a> -->
+            <a href="#contact">Contact</a>
             <a href="./pages/login.php" class="btn">Login</a>
             <a href="./pages/signup.php" class="btn btn-secondary">Sign Up</a>
         </nav>
@@ -193,38 +193,19 @@ a {
    
     <section class="hero">
         <div class="hero-text">
-            <h1>XY_SHOP Stock Management</h1>
+            <h1>Effortless Stock Management</h1>
             <p>Track, update, and manage your inventory with ease.</p>
             <a href="./pages/signup.php" class="btn btn-primary">Get Started</a>
+
+            <p  style="color:white;">Stocking in </p>
+            <p  style="color:white;">Stocking</p>
+            <p  style="color:white;">Here We do stock </p> <br>
         </div>
         <div class="hero-image">
 
         </div>
     </section>
 
- 
-    <section id="features" class="features">
-        <h2>Why Choose XY_SHOP?</h2>
-        <div class="feature-cards">
-            <div class="feature-card">
-            <img src="./images/illust.png" alt="Stock Management Illustration">
-                <h3>Real-Time Updates</h3>
-                <p>Stay updated with instant stock changes and live tracking.</p>
-            </div>
-            <div class="feature-card">
-            <img src="./images/illust.png" alt="Stock Management Illustration">
-                <h3>Boost Efficiency</h3>
-                <p>Optimize your workflow with our intuitive system.</p>
-            </div>
-            <div class="feature-card">
-            <img src="./images/illust.png" alt="Stock Management Illustration">
-                <h3>Detailed Reports</h3>
-                <p>Get insights into your inventory performance anytime.</p>
-            </div>
-        </div>
-    </section>
-
-  
     <footer class="footer">
         <p>&copy; 2024 StockEase. All rights reserved.</p>
     </footer>

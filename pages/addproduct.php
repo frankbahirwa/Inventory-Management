@@ -211,7 +211,7 @@ if ($_POST) {
     $added_by = $user['user_id'];
 
 
-    $stmts = $conn->prepare("SELECT product_name FROM products WHERE product_name = ?");
+    $stmts = $conn->prepare("SELECT product_name FROM products WHERE product_name = ? && added_by=$added_by");
     $stmts->bind_param("s", $name);
     $stmts->execute();
     $result = $stmts->get_result();

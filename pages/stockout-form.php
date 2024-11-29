@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+require "../Backend/connection.php";
 if(!$_SESSION['username']){
     header("location: ../index.php");
     exit();
@@ -244,7 +244,31 @@ transform: scale(1);
 <div class="formed">
 <form action="../Backend/stock-out.php"method="post">
 <p style="color:teal;margin-bottom:2cm;font-size:30px;">Stock - Out Items</p> 
-<input type="text"  name = "name" id="item-name" placeholder="Item Name" style="width:10cm; height:1cm;border-radius:9px;"> <br><br>
+
+<select name="name" id="name" style="width:10cm;height:1cm; border-radius:10px;">
+<option value="" selected>Choose the product to stock-out</option>
+<?php 
+$username = $_SESSION['username'];
+$stmt = $conn->prepare("SELECT user_id FROM user WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user) {
+    echo "<script>alert('User not found.');window.history.back();</script>";
+    exit;
+}
+
+$added_by = $user['user_id'];
+
+$slct = $conn->query("SELECT product_name FROM products where added_by=$added_by");
+while($row=$slct->fetch_assoc()){?>
+<option value="<?php echo $row['product_name'] ?>"><?php echo $row['product_name'] ?></option>
+
+<?php }
+?>
+</select> <br><br>
 <input type="number" name = "quantity" id="item-name" placeholder="Item Quantity" style="width:10cm;height:1cm;border-radius:9px;"><br><br>
 <textarea  name="reason" id="description" placeholder="Reason for Stock-Out" style="width:10cm;"></textarea>
 <div class="buttons">

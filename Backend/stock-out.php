@@ -38,7 +38,7 @@ if ($userResult->num_rows > 0) {
 }
 
 // Get or set product ID
-$stmt = $conn->prepare("SELECT product_id FROM products WHERE product_name = ?");
+$stmt = $conn->prepare("SELECT product_id FROM products WHERE product_name = ? && added_by = $user_id");
 $stmt->bind_param("s", $name);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -51,7 +51,7 @@ if ($result->num_rows > 0) {
 if ($action === 'stockOut') {
 
   
-    $stmt = $conn->prepare("SELECT quantity FROM products WHERE product_name = ?");
+    $stmt = $conn->prepare("SELECT quantity FROM products WHERE product_name = ? && added_by = $user_id");
     $stmt->bind_param("s", $name);
     $stmt->execute();
     $result = $stmt->get_result();

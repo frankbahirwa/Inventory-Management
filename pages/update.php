@@ -272,7 +272,7 @@ outline: 0;
 <option value="food">food & related</option>
 <option value="other">other</option>
 </select>     
-<input type="file" name="file" id="file">     
+<input type="hidden" name="file" id="file">     
 </div>
 <div class="second">
 <input type="text" name="name" id="name" placeholder="Product Name" value="<?php echo $row['product_name']?>">

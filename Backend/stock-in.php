@@ -112,10 +112,11 @@ if ($action === 'stockIn') {
             $stmt->bind_param("ids", $new_quantity, $price, $name);
         }
         $stmt->execute();
+
     } else {
-        $stockInStmt = $conn->prepare("INSERT INTO products (product_name, description, price, product_id, quantity, supplier, category, product_image_path, added_by, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-        $stockInStmt->bind_param("ssdiiissi", $name, $description, $price, $product_id, $quantity, $supplier, $category, $product_image_path, $added_by);
-        $stockInStmt->execute();
+        $stmt = $conn->prepare("INSERT INTO products (product_name, description, price, quantity, supplier, category, product_image_path, added_by, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
+        $stmt->bind_param("ssdiissi", $name, $description, $price, $quantity, $supplier, $category, $product_image_path, $added_by);
+        $stmt->execute();
     }
 
     $stockInStmt = $conn->prepare("INSERT INTO stockin (product_name, description, price, product_id, quantity, supplier, category, product_image_path, added_by, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");

@@ -172,11 +172,12 @@ if(!$_SESSION['username']){
         
         else{
 
-            $stockinss = $conn->prepare("SELECT COUNT(*) FROM stockin WHERE added_by =$added_by && product_id =$PROID");
+            $stockinss = $conn->prepare("SELECT COUNT(*) FROM stockin WHERE added_by =$added_by");
             $stockinss->execute();
             $stockinsResult = $stockinss->get_result();
-            $stockinscount = 0;
-            $stcokins = $stockinscount ? 0:$stockinsResult->fetch_assoc()['COUNT(*)'];
+            $stockinscount = $stockinsResult->fetch_assoc()['COUNT(*)'];
+
+
 
         }
   
@@ -188,7 +189,7 @@ if(!$_SESSION['username']){
                 <td><?php echo $row['product_id']; ?></td>
                 <td><?php echo $row['product_name']; ?></td>
                 <td><?php echo $row['quantity']; ?></td>
-                <td><?php echo $stcokins; ?></td>
+                <td><?php echo $stockinscount; ?></td>
                 <td><?php echo $outss; ?></td>
                 <td><?php echo $row['created_at']; ?></td>
                 <td>
@@ -226,6 +227,20 @@ else{
     $stockoutcount = 0;
     $outsss = $stockoutcount ? 0: $stockoutResult->fetch_assoc()['COUNT(*)'];
 
+
+
+    $userCountStm = $conn->prepare("SELECT COUNT(quantity) FROM products WHERE quantity <= 20 && added_by = $added_by");
+    $userCountStm->execute();
+    $userCountResults = $userCountStm->get_result();
+    $userCounts = $userCountResults->fetch_assoc()['COUNT(quantity)'];
+    $plansCount = $userCounts;
+
+
+    $stockinss = $conn->prepare("SELECT COUNT(*) FROM stockin WHERE added_by =$added_by");
+    $stockinss->execute();
+    $stockinsResult = $stockinss->get_result();
+    $stockinscount = $stockinsResult->fetch_assoc()['COUNT(*)'];
+
 }
 
     ?>
@@ -233,6 +248,8 @@ else{
     <div class="footer">
         <p><strong>Current - Stock:</strong> <?php echo $data; ?></p>
         <p><strong>Total-stock-outs:</strong> <?php echo $outsss; ?></p>
+        <p><strong>Total-stock-Ins:</strong> <?php echo $stockinscount; ?></p>
+        <p><strong>Low-In-Stock:</strong> <?php echo $plansCount; ?></p>
         <p>Prepared by: _xy shop_ System__</p>
         <p>Checked by: __<?php echo ucfirst($_SESSION['username']); ?>__</p>
     </div>

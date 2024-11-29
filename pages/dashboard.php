@@ -322,7 +322,7 @@ if (!$user) {
 
 $added_by = $user['user_id'];
 
-$userCountStm = $conn->prepare("SELECT COUNT(quantity) AS product_count FROM products WHERE quantity <= 20 && added_by = $added_by");
+$userCountStm = $conn->prepare("SELECT COUNT(quantity) AS product_count FROM products WHERE added_by = $added_by");
 $userCountStm->execute();
 $userCountResults = $userCountStm->get_result();
 $userCounts = $userCountResults->fetch_assoc()['product_count'];
@@ -341,7 +341,15 @@ while ($row = $slct->fetch_assoc())
 <td style="text-align:center;"><?php echo $row['price'] * $row['quantity'] ;?></td>
 <td style="text-align:center;">
 <?php
-$status = $plansCount; if($status <= 20){ $stat = "Low in stock";} else{$stat = "Available";} echo $stat;
+$status = $plansCount; 
+$stat = '';
+if($status <= 30){ 
+    $stat = "Low in stock";
+} else{
+    $stat = "Available";
+} 
+
+echo $stat;
  ?>
 </td>
 </td>
